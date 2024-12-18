@@ -1,12 +1,14 @@
 import { PlusCircle } from "@phosphor-icons/react"
 
-export function Input({ task, setTask, addTask }) {
+export function Input({ task, setTask, addTask, onKeyDown, inputRef }) {
   return (
     <div className="flex gap-2 w-[736px] mx-auto mt-[-28px] mb-16">
       <input
         type="text"
         value={task}
         onChange={(e) => setTask(e.target.value)}
+        onKeyDown={onKeyDown}
+        ref={inputRef}
         placeholder="Adicione uma nova tarefa"
         className="flex-1 bg-gray-500 p-4 rounded-lg text-gray-100 placeholder-gray-300 outline-none border border-gray-700 focus:border focus:border-blue-normal"
       />

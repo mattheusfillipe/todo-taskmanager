@@ -30,7 +30,7 @@ export function TaskList({ taskList, onCompletedTasksChange, onRemoveTask }) {
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", visualDuration: 1, delay: 0.2 }}
+          transition={{ type: "spring", visualDuration: 0.5 }}
           className="flex flex-col items-center gap-4"
         >
           <ClipboardText size={56} className="text-gray-400" />
