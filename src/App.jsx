@@ -26,12 +26,9 @@ export function App() {
   }
 
   function handleRemoveTask(taskIdToRemove) {
-    // Cria uma nova lista sem o item que queremos remover
-    const updatedTaskList = taskList.filter(
-      (task) => task.id !== taskIdToRemove
+    setTaskList((prevTaskList) =>
+      prevTaskList.filter((task) => task.id !== taskIdToRemove)
     )
-
-    setTaskList(updatedTaskList)
   }
 
   return (
