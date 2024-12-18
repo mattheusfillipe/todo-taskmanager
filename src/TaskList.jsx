@@ -54,7 +54,7 @@ export function TaskList({ taskList, onCompletedTasksChange, onRemoveTask }) {
               initial={{ opacity: 0, x: -200 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 200 }}
-              transition={{ type: "tween", visualDuration: 0.5 }}
+              transition={{ type: "spring", visualDuration: 0.5 }}
               className="flex items-start gap-4 bg-gray-500 border border-gray-400 rounded-lg p-4 text-sm"
             >
               <label className="relative cursor-pointer">
@@ -89,7 +89,7 @@ export function TaskList({ taskList, onCompletedTasksChange, onRemoveTask }) {
               <Trash
                 onClick={() => onRemoveTask(task.id)}
                 size={16}
-                className="ml-auto text-gray-300 cursor-pointer"
+                className="ml-auto text-gray-300 cursor-pointer hover:text-red-danger"
               />
             </motion.div>
           ))}

@@ -15,7 +15,6 @@ export function App() {
 
   function addTask() {
     if (task.trim()) {
-      // Cria um objeto de tarefa com ID único
       const newTask = {
         id: uuidv4(), // Gera um ID único
         text: task,
@@ -24,9 +23,7 @@ export function App() {
       setTaskList([...taskList, newTask])
       setTask("")
 
-      if (inputRef.current) {
-        inputRef.current.focus()
-      }
+      inputRef.current.focus()
     }
   }
 
