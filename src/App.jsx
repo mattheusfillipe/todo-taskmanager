@@ -1,4 +1,5 @@
 import "./index.css"
+import { v4 as uuidv4 } from "uuid"
 import { useState } from "react"
 import { Input } from "./Input"
 import { Header } from "./Header"
@@ -13,15 +14,21 @@ export function App() {
 
   function addTask() {
     if (task.trim()) {
-      setTaskList([task, ...taskList])
+      // Cria um objeto de tarefa com ID único
+      const newTask = {
+        id: uuidv4(), // Gera um ID único
+        text: task,
+      }
+
+      setTaskList([...taskList, newTask])
       setTask("")
     }
   }
 
-  function handleRemoveTask(indexToRemove) {
+  function handleRemoveTask(taskIdToRemove) {
     // Cria uma nova lista sem o item que queremos remover
     const updatedTaskList = taskList.filter(
-      (_, index) => index !== indexToRemove
+      (task) => task.id !== taskIdToRemove
     )
 
     setTaskList(updatedTaskList)

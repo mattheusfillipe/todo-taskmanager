@@ -1,16 +1,20 @@
 import { CheckFat, ClipboardText, Trash } from "@phosphor-icons/react"
 import { useState } from "react"
+
 export function TaskList({ taskList, onCompletedTasksChange, onRemoveTask }) {
   const [checkedTasks, setCheckedTasks] = useState(() =>
-    taskList.map(() => false)
+    taskList.reduce((acc, task) => {
+      acc[task.id] = false
+      return acc
+    }, {})
   )
 
-  function handleCheckboxChange(index) {
+  function handleCheckboxChange(taskId) {
     setCheckedTasks((prevChecked) => {
-      const newChecked = [...prevChecked]
-      newChecked[index] = !newChecked[index]
+      const newChecked = { ...prevChecked }
+      newChecked[taskId] = !newChecked[taskId]
 
-      const completedCount = newChecked.filter(Boolean).length
+      const completedCount = Object.values(newChecked).filter(Boolean).length
       onCompletedTasksChange(completedCount)
 
       return newChecked
@@ -21,7 +25,7 @@ export function TaskList({ taskList, onCompletedTasksChange, onRemoveTask }) {
     <div className="flex flex-col w-[736px] mx-auto">
       <div className="border-t border-gray-400 w-[736px] my-7" />
 
-      {taskList.length === 0 && ( // só renderiza se taskList não estiver vazio.
+      {taskList.length === 0 && ( // só renderiza se taskList estiver vazio.
         <div className="flex flex-col items-center gap-4">
           <ClipboardText size={56} className="text-gray-400" />
           <div className="text-gray-300 text-center">
@@ -34,23 +38,23 @@ export function TaskList({ taskList, onCompletedTasksChange, onRemoveTask }) {
       )}
 
       <div className="flex flex-col gap-4">
-        {taskList.map((task, index) => (
+        {taskList.map((task) => (
           <div
-            key={index}
+            key={task.id}
             className="flex items-start gap-4 bg-gray-500 border border-gray-400 rounded-lg p-4 text-sm"
           >
             <label className="relative cursor-pointer">
               <input
                 type="checkbox"
                 className="sr-only peer"
-                checked={checkedTasks[index]}
-                onChange={() => handleCheckboxChange(index)}
+                checked={checkedTasks[task.id]}
+                onChange={() => handleCheckboxChange(task.id)}
               />
               <div
                 className={`w-[18px] h-[18px] flex items-center justify-center cursor-pointer bg-gray-500 border-2 border-blue-normal rounded-full peer-checked:bg-purple-normal peer-checked:border-none`}
               >
                 {/* Ícone quando marcado */}
-                {checkedTasks[index] && (
+                {checkedTasks[task.id] && (
                   <CheckFat
                     size={12}
                     weight="fill"
@@ -61,15 +65,15 @@ export function TaskList({ taskList, onCompletedTasksChange, onRemoveTask }) {
             </label>
             <p
               className={`flex-1 ${
-                checkedTasks[index]
+                checkedTasks[task.id]
                   ? "line-through text-gray-300"
                   : "text-gray-100"
               }`}
             >
-              {task}
+              {task.text}
             </p>
             <Trash
-              onClick={() => onRemoveTask(index)}
+              onClick={() => onRemoveTask(task.id)}
               size={16}
               className="ml-auto text-gray-300 cursor-pointer"
             />
